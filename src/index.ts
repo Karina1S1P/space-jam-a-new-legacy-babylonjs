@@ -12,7 +12,7 @@ import {
 } from "babylonjs";
 import * as cannon from "cannon";
 import { WoodProceduralTexture } from "babylonjs-procedural-textures";
-
+import {Environment} from "./environment"
 var canvas = document.getElementById("renderCanvas") as HTMLCanvasElement;
 
 // Load the 3D engine
@@ -22,6 +22,7 @@ var createDefaultEngine = function () {
   return new Engine(canvas, true, {
     preserveDrawingBuffer: true,
     stencil: true,
+    
   });
 };
 
@@ -32,6 +33,8 @@ var createScene = async function () {
   var camera = new ArcRotateCamera("cam", -Math.PI / 2, Math.PI / 2, 10, new Vector3(0, -2, 3), scene);
   camera.wheelDeltaPercentage = 0.01;
   camera.attachControl(canvas, true);
+  const environment = new Environment(scene, engine);
+  environment.init();
 
   // Create a basic hemispheric light source and add it to the scene
   var light = new HemisphericLight(
